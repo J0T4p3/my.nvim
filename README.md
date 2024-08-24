@@ -1,4 +1,6 @@
-# 💤 LazyVim
+# Isso é um teste
 
-A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
-Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
+## Agora o negócio ficou sério!!
+
+> [!NOTE][Testando]
+
