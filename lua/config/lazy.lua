@@ -14,16 +14,19 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('config.keymaps')
+require('config.autocmds')
 require('config.globals')
 require('config.options')
+require('config.keymaps')
 
 local opts = {
 	defaults = { 
 		lazy = true,
 		version = nil,
 	},
-	install = { colorscheme = {'nightfly'} },
+	install = { 
+        colorscheme = {'nightfly'} 
+    },
 	change_detection = {
 		notify = true,
 	},
