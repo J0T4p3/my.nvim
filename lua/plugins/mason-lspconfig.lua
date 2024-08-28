@@ -9,6 +9,7 @@ local opts = {
 return {
     "Williamboman/mason-lspconfig.nvim",
     opts = opts,
+    event = 'BufReadPre',
     dependencies = {
         "williamboman/mason.nvim",
     }
