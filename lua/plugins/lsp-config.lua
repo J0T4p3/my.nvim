@@ -17,8 +17,10 @@ local config = function()
 	local on_attach = function(bufnr, client)
 		local opts = { noremap = true, silent = true, buffer = bufnr }
 
-		vim.keymap.set("n", "<leader>fd", "<cmd>Lspsaga finder<CR>", opts) -- go to definitionkeymap.set
-		vim.keymap.set("n", "<leader>gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- peak definition
+		vim.keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>", opts) -- go to definitionkeymap.set
+		vim.keymap.set("n", "gD", "<cmd>lua vim.buf.declaration()<CR>", opts) -- peak declaration in buffer
+		vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- peak definition
+		vim.keymap.set("n", "gi", "<cmd>lua vim.buf.implementation()<CR>", opts) -- peak definition
 		vim.keymap.set("n", "<leader>gD", "<cmd>Lspsaga goto_type_definition<CR>", opts) -- go to definition
 		vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_type_action<CR>", opts) -- see available code actions
 		vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
@@ -56,11 +58,25 @@ local config = function()
 
 	local luacheck = require("efmls-configs.linters.luacheck")
 	local stylua = require("efmls-configs.formatters.stylua")
+    local flake8 = require("efmls-configs.linters.flake8")
+    local black = require("efmls-configs.formatters.black")
+    local eslint_d = require("efmls-configs.linters.eslint_d")
+    local prettierd = require("efmls-configs.formatters.prettier_d")
+    local fixjson = require("efmls-configs.formatters.fixjson")
+    local shellcheck = require("efmls-configs.linters.shellcheck")
 
 	-- configure efm server
 	lsp.efm.setup({
 		filetypes = {
 			"lua",
+			"python",
+			"json",
+			"jsonc",
+			"sh",
+			"javascript",
+			"markdown",
+			"docker",
+			"go",
 		},
 		init_options = {
 			documentFormatting = true,
@@ -73,6 +89,13 @@ local config = function()
 		settings = {
 			languages = {
 				lua = { luacheck, stylua },
+				python = { flake8, black },
+				json = { eslint_d, fixjson },
+				jsonc = { eslint_d, fixjson },
+				sh = { shellcheck, shfmt },
+				javascript = { eslint_d, prettierd },
+				markdown = { alex, prettierd },
+				docker = { hadolint, prettierd },
 			},
 		},
 	})
@@ -86,5 +109,8 @@ return {
 		"windwp/nvim-autopairs",
 		"williamboman/mason.nvim",
 		"creativenull/efmls-configs-nvim",
+		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-nvim-lsp",
 	},
 }

@@ -1,37 +1,37 @@
-lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 	if vim.v.shell_error ~= 0 then
-	vim.api.nvim_echo({
-		{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-		{ out, "WarningMsg" },
-		{ "\nPress any key to exit..." },
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
-	os.exit(1)
+		os.exit(1)
 	end
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('config.autocmds')
-require('config.globals')
-require('config.options')
-require('config.keymaps')
+require("config.autocmds")
+require("config.globals")
+require("config.options")
+require("config.keymaps")
 
 local opts = {
-	defaults = { 
+	defaults = {
 		lazy = true,
 		version = nil,
 	},
-	install = { 
-        colorscheme = {'nightfly'} 
-    },
+	install = {
+		colorscheme = { "nightfly" },
+	},
 	change_detection = {
-		notify = true,
+		notify = false,
 	},
 	performance = {
-		      rtp = {
+		rtp = {
 			-- disable some rtp plugins
 			disabled_plugins = {
 				"gzip",
@@ -46,4 +46,4 @@ local opts = {
 	},
 }
 
-require('lazy').setup('plugins', opts)
+require("lazy").setup("plugins", opts)
