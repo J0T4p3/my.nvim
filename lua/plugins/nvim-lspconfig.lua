@@ -30,6 +30,11 @@ return {
         })
 
         ---- LSP's
+        -- HTML
+        require('lspconfig').superhtml.setup({
+            filetypes = { 'html', 'superhtml', 'asp', 'htm' },
+        })
+
         -- Go
         require('lspconfig').gopls.setup {}
 
